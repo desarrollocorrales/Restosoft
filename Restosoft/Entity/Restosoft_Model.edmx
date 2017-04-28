@@ -1,0 +1,420 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RestosoftModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="RestosoftModelStoreContainer">
+          <EntitySet Name="articulos" EntityType="RestosoftModel.Store.articulos" store:Type="Tables" Schema="restosoft" />
+          <EntitySet Name="articulos_compuestos" EntityType="RestosoftModel.Store.articulos_compuestos" store:Type="Tables" Schema="restosoft" />
+          <EntitySet Name="articulos_compuestos_detalles" EntityType="RestosoftModel.Store.articulos_compuestos_detalles" store:Type="Tables" Schema="restosoft" />
+          <EntitySet Name="categorias_articulos" EntityType="RestosoftModel.Store.categorias_articulos" store:Type="Tables" Schema="restosoft" />
+          <EntitySet Name="cuentas" EntityType="RestosoftModel.Store.cuentas" store:Type="Tables" Schema="restosoft" />
+          <EntitySet Name="cuentas_detalles" EntityType="RestosoftModel.Store.cuentas_detalles" store:Type="Tables" Schema="restosoft" />
+          <EntitySet Name="cuentas_temporales" EntityType="RestosoftModel.Store.cuentas_temporales" store:Type="Tables" Schema="restosoft" />
+          <EntitySet Name="cuentas_temporales_detalles" EntityType="RestosoftModel.Store.cuentas_temporales_detalles" store:Type="Tables" Schema="restosoft" />
+          <EntitySet Name="empleados" EntityType="RestosoftModel.Store.empleados" store:Type="Tables" Schema="restosoft" />
+          <EntitySet Name="grupos_articulos" EntityType="RestosoftModel.Store.grupos_articulos" store:Type="Tables" Schema="restosoft" />
+          <EntitySet Name="mesas" EntityType="RestosoftModel.Store.mesas" store:Type="Tables" Schema="restosoft" />
+          <EntitySet Name="turnos" EntityType="RestosoftModel.Store.turnos" store:Type="Tables" Schema="restosoft" />
+          <AssociationSet Name="xc" Association="RestosoftModel.Store.xc">
+            <End Role="categorias_articulos" EntitySet="categorias_articulos" />
+            <End Role="grupos_articulos" EntitySet="grupos_articulos" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="articulos">
+          <Key>
+            <PropertyRef Name="id_articulo" />
+          </Key>
+          <Property Name="id_articulo" Type="usmallint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="articulo" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="articulos_compuestos">
+          <Key>
+            <PropertyRef Name="id_articulo_compuesto" />
+          </Key>
+          <Property Name="id_articulo_compuesto" Type="utinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="varchar" MaxLength="150" />
+          <Property Name="precio" Type="decimal" Precision="9" Scale="2" />
+        </EntityType>
+        <EntityType Name="articulos_compuestos_detalles">
+          <Key>
+            <PropertyRef Name="id_articulo_compuesto_detalle" />
+          </Key>
+          <Property Name="id_articulo_compuesto_detalle" Type="utinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="categorias_articulos">
+          <Key>
+            <PropertyRef Name="id_categoria" />
+          </Key>
+          <Property Name="id_categoria" Type="utinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="categoria" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="cuentas">
+          <Key>
+            <PropertyRef Name="id_cuenta" />
+          </Key>
+          <Property Name="id_cuenta" Type="guid" Nullable="false" />
+          <Property Name="fecha_creacion" Type="datetime" Nullable="false" />
+          <Property Name="total_cuenta" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="numero_personas" Type="utinyint" Nullable="false" />
+          <Property Name="fecha_termino" Type="datetime" />
+        </EntityType>
+        <EntityType Name="cuentas_detalles">
+          <Key>
+            <PropertyRef Name="id_cuentas_detalles" />
+          </Key>
+          <Property Name="id_cuentas_detalles" Type="usmallint" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="cuentas_temporales">
+          <Key>
+            <PropertyRef Name="id_cuenta_temporal" />
+          </Key>
+          <Property Name="id_cuenta_temporal" Type="guid" Nullable="false" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="total_cuenta" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="numero_personas" Type="utinyint" />
+          <Property Name="fecha_termino" Type="datetime" />
+        </EntityType>
+        <EntityType Name="cuentas_temporales_detalles">
+          <Key>
+            <PropertyRef Name="id_cuenta_temporal_detalle" />
+          </Key>
+          <Property Name="id_cuenta_temporal_detalle" Type="usmallint" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="empleados">
+          <Key>
+            <PropertyRef Name="id_empleado" />
+          </Key>
+          <Property Name="id_empleado" Type="utinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="varchar" MaxLength="80" />
+          <Property Name="apellido_paterno" Type="varchar" MaxLength="120" />
+          <Property Name="apellido_materno" Type="varchar" MaxLength="120" />
+          <Property Name="id_permiso" Type="usmallint" />
+          <Property Name="fecha_nacimiento" Type="date" />
+          <Property Name="fecha_ingreso" Type="date" />
+        </EntityType>
+        <EntityType Name="grupos_articulos">
+          <Key>
+            <PropertyRef Name="id_grupo" />
+            <PropertyRef Name="categorias_articulos_id_categoria" />
+          </Key>
+          <Property Name="id_grupo" Type="usmallint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="categorias_articulos_id_categoria" Type="utinyint" Nullable="false" />
+          <Property Name="grupo" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="mesas">
+          <Key>
+            <PropertyRef Name="id_mesa" />
+          </Key>
+          <Property Name="id_mesa" Type="utinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="turnos">
+          <Key>
+            <PropertyRef Name="id_turno" />
+          </Key>
+          <Property Name="id_turno" Type="guid" Nullable="false" />
+          <Property Name="fecha_inicio" Type="datetime" Nullable="false" />
+          <Property Name="fecha_final" Type="datetime" />
+        </EntityType>
+        <Association Name="xc">
+          <End Role="categorias_articulos" Type="RestosoftModel.Store.categorias_articulos" Multiplicity="1" />
+          <End Role="grupos_articulos" Type="RestosoftModel.Store.grupos_articulos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categorias_articulos">
+              <PropertyRef Name="id_categoria" />
+            </Principal>
+            <Dependent Role="grupos_articulos">
+              <PropertyRef Name="categorias_articulos_id_categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RestosoftModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="Restosoft_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="articulos" EntityType="RestosoftModel.articulos" />
+          <EntitySet Name="articulos_compuestos" EntityType="RestosoftModel.articulos_compuestos" />
+          <EntitySet Name="articulos_compuestos_detalles" EntityType="RestosoftModel.articulos_compuestos_detalles" />
+          <EntitySet Name="categorias_articulos" EntityType="RestosoftModel.categorias_articulos" />
+          <EntitySet Name="cuentas" EntityType="RestosoftModel.cuentas" />
+          <EntitySet Name="cuentas_detalles" EntityType="RestosoftModel.cuentas_detalles" />
+          <EntitySet Name="cuentas_temporales" EntityType="RestosoftModel.cuentas_temporales" />
+          <EntitySet Name="cuentas_temporales_detalles" EntityType="RestosoftModel.cuentas_temporales_detalles" />
+          <EntitySet Name="empleados" EntityType="RestosoftModel.empleados" />
+          <EntitySet Name="grupos_articulos" EntityType="RestosoftModel.grupos_articulos" />
+          <EntitySet Name="mesas" EntityType="RestosoftModel.mesas" />
+          <EntitySet Name="turnos" EntityType="RestosoftModel.turnos" />
+          <AssociationSet Name="xc" Association="RestosoftModel.xc">
+            <End Role="categorias_articulos" EntitySet="categorias_articulos" />
+            <End Role="grupos_articulos" EntitySet="grupos_articulos" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="articulos">
+          <Key>
+            <PropertyRef Name="id_articulo" />
+          </Key>
+          <Property Name="id_articulo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="articulo" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="articulos_compuestos">
+          <Key>
+            <PropertyRef Name="id_articulo_compuesto" />
+          </Key>
+          <Property Name="id_articulo_compuesto" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <Property Name="precio" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="articulos_compuestos_detalles">
+          <Key>
+            <PropertyRef Name="id_articulo_compuesto_detalle" />
+          </Key>
+          <Property Name="id_articulo_compuesto_detalle" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="categorias_articulos">
+          <Key>
+            <PropertyRef Name="id_categoria" />
+          </Key>
+          <Property Name="id_categoria" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="categoria" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="grupos_articulos" Relationship="RestosoftModel.xc" FromRole="categorias_articulos" ToRole="grupos_articulos" />
+        </EntityType>
+        <EntityType Name="cuentas">
+          <Key>
+            <PropertyRef Name="id_cuenta" />
+          </Key>
+          <Property Name="id_cuenta" Type="Guid" Nullable="false" />
+          <Property Name="fecha_creacion" Type="DateTime" Nullable="false" />
+          <Property Name="total_cuenta" Type="Decimal" />
+          <Property Name="numero_personas" Type="Byte" Nullable="false" />
+          <Property Name="fecha_termino" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="cuentas_detalles">
+          <Key>
+            <PropertyRef Name="id_cuentas_detalles" />
+          </Key>
+          <Property Name="id_cuentas_detalles" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="cuentas_temporales">
+          <Key>
+            <PropertyRef Name="id_cuenta_temporal" />
+          </Key>
+          <Property Name="id_cuenta_temporal" Type="Guid" Nullable="false" />
+          <Property Name="fecha_creacion" Type="DateTime" />
+          <Property Name="total_cuenta" Type="Decimal" />
+          <Property Name="numero_personas" Type="Byte" />
+          <Property Name="fecha_termino" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="cuentas_temporales_detalles">
+          <Key>
+            <PropertyRef Name="id_cuenta_temporal_detalle" />
+          </Key>
+          <Property Name="id_cuenta_temporal_detalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="empleados">
+          <Key>
+            <PropertyRef Name="id_empleado" />
+          </Key>
+          <Property Name="id_empleado" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="80" Unicode="false" FixedLength="false" />
+          <Property Name="apellido_paterno" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
+          <Property Name="apellido_materno" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
+          <Property Name="id_permiso" Type="Int32" />
+          <Property Name="fecha_nacimiento" Type="DateTime" />
+          <Property Name="fecha_ingreso" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="grupos_articulos">
+          <Key>
+            <PropertyRef Name="id_grupo" />
+            <PropertyRef Name="categorias_articulos_id_categoria" />
+          </Key>
+          <Property Name="id_grupo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="categorias_articulos_id_categoria" Type="Byte" Nullable="false" />
+          <Property Name="grupo" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="categorias_articulos" Relationship="RestosoftModel.xc" FromRole="grupos_articulos" ToRole="categorias_articulos" />
+        </EntityType>
+        <EntityType Name="mesas">
+          <Key>
+            <PropertyRef Name="id_mesa" />
+          </Key>
+          <Property Name="id_mesa" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="turnos">
+          <Key>
+            <PropertyRef Name="id_turno" />
+          </Key>
+          <Property Name="id_turno" Type="Guid" Nullable="false" />
+          <Property Name="fecha_inicio" Type="DateTime" Nullable="false" />
+          <Property Name="fecha_final" Type="DateTime" />
+        </EntityType>
+        <Association Name="xc">
+          <End Role="categorias_articulos" Type="RestosoftModel.categorias_articulos" Multiplicity="1" />
+          <End Role="grupos_articulos" Type="RestosoftModel.grupos_articulos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categorias_articulos">
+              <PropertyRef Name="id_categoria" />
+            </Principal>
+            <Dependent Role="grupos_articulos">
+              <PropertyRef Name="categorias_articulos_id_categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RestosoftModelStoreContainer" CdmEntityContainer="Restosoft_Entities">
+          <EntitySetMapping Name="articulos">
+            <EntityTypeMapping TypeName="RestosoftModel.articulos">
+              <MappingFragment StoreEntitySet="articulos">
+                <ScalarProperty Name="id_articulo" ColumnName="id_articulo" />
+                <ScalarProperty Name="articulo" ColumnName="articulo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="articulos_compuestos">
+            <EntityTypeMapping TypeName="RestosoftModel.articulos_compuestos">
+              <MappingFragment StoreEntitySet="articulos_compuestos">
+                <ScalarProperty Name="id_articulo_compuesto" ColumnName="id_articulo_compuesto" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="articulos_compuestos_detalles">
+            <EntityTypeMapping TypeName="RestosoftModel.articulos_compuestos_detalles">
+              <MappingFragment StoreEntitySet="articulos_compuestos_detalles">
+                <ScalarProperty Name="id_articulo_compuesto_detalle" ColumnName="id_articulo_compuesto_detalle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categorias_articulos">
+            <EntityTypeMapping TypeName="RestosoftModel.categorias_articulos">
+              <MappingFragment StoreEntitySet="categorias_articulos">
+                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+                <ScalarProperty Name="categoria" ColumnName="categoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cuentas">
+            <EntityTypeMapping TypeName="RestosoftModel.cuentas">
+              <MappingFragment StoreEntitySet="cuentas">
+                <ScalarProperty Name="id_cuenta" ColumnName="id_cuenta" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="total_cuenta" ColumnName="total_cuenta" />
+                <ScalarProperty Name="numero_personas" ColumnName="numero_personas" />
+                <ScalarProperty Name="fecha_termino" ColumnName="fecha_termino" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cuentas_detalles">
+            <EntityTypeMapping TypeName="RestosoftModel.cuentas_detalles">
+              <MappingFragment StoreEntitySet="cuentas_detalles">
+                <ScalarProperty Name="id_cuentas_detalles" ColumnName="id_cuentas_detalles" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cuentas_temporales">
+            <EntityTypeMapping TypeName="RestosoftModel.cuentas_temporales">
+              <MappingFragment StoreEntitySet="cuentas_temporales">
+                <ScalarProperty Name="id_cuenta_temporal" ColumnName="id_cuenta_temporal" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="total_cuenta" ColumnName="total_cuenta" />
+                <ScalarProperty Name="numero_personas" ColumnName="numero_personas" />
+                <ScalarProperty Name="fecha_termino" ColumnName="fecha_termino" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cuentas_temporales_detalles">
+            <EntityTypeMapping TypeName="RestosoftModel.cuentas_temporales_detalles">
+              <MappingFragment StoreEntitySet="cuentas_temporales_detalles">
+                <ScalarProperty Name="id_cuenta_temporal_detalle" ColumnName="id_cuenta_temporal_detalle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="empleados">
+            <EntityTypeMapping TypeName="RestosoftModel.empleados">
+              <MappingFragment StoreEntitySet="empleados">
+                <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido_paterno" ColumnName="apellido_paterno" />
+                <ScalarProperty Name="apellido_materno" ColumnName="apellido_materno" />
+                <ScalarProperty Name="id_permiso" ColumnName="id_permiso" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="fecha_ingreso" ColumnName="fecha_ingreso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="grupos_articulos">
+            <EntityTypeMapping TypeName="RestosoftModel.grupos_articulos">
+              <MappingFragment StoreEntitySet="grupos_articulos">
+                <ScalarProperty Name="id_grupo" ColumnName="id_grupo" />
+                <ScalarProperty Name="categorias_articulos_id_categoria" ColumnName="categorias_articulos_id_categoria" />
+                <ScalarProperty Name="grupo" ColumnName="grupo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mesas">
+            <EntityTypeMapping TypeName="RestosoftModel.mesas">
+              <MappingFragment StoreEntitySet="mesas">
+                <ScalarProperty Name="id_mesa" ColumnName="id_mesa" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="turnos">
+            <EntityTypeMapping TypeName="RestosoftModel.turnos">
+              <MappingFragment StoreEntitySet="turnos">
+                <ScalarProperty Name="id_turno" ColumnName="id_turno" />
+                <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+                <ScalarProperty Name="fecha_final" ColumnName="fecha_final" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Restosoft_Model">
+        <EntityTypeShape EntityType="RestosoftModel.articulos" Width="1.5" PointX="0.75" PointY="3.75" Height="1.4033821614583335" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestosoftModel.articulos_compuestos" Width="1.5" PointX="2.75" PointY="3.75" Height="1.5956835937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestosoftModel.articulos_compuestos_detalles" Width="1.5" PointX="4.75" PointY="3.75" Height="1.211080729166667" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestosoftModel.categorias_articulos" Width="1.5" PointX="0.75" PointY="1" Height="1.5956835937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestosoftModel.cuentas" Width="1.5" PointX="5.75" PointY="0.75" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestosoftModel.cuentas_detalles" Width="1.5" PointX="4.75" PointY="5.75" Height="1.2110807291666674" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestosoftModel.cuentas_temporales" Width="1.5" PointX="0.75" PointY="6.75" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestosoftModel.cuentas_temporales_detalles" Width="1.5" PointX="6.75" PointY="3.75" Height="1.2110807291666674" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestosoftModel.empleados" Width="1.5" PointX="6.75" PointY="5.75" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestosoftModel.grupos_articulos" Width="1.5" PointX="3" PointY="0.875" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestosoftModel.mesas" Width="1.5" PointX="7.75" PointY="0.75" Height="1.4033821614583353" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestosoftModel.turnos" Width="1.5" PointX="2.75" PointY="7.75" Height="1.5956835937500031" IsExpanded="true" />
+        <AssociationConnector Association="RestosoftModel.xc" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="1.7978417968749998" />
+          <ConnectorPoint PointX="3" PointY="1.7978417968749998" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
